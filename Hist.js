@@ -33,7 +33,7 @@
                 .style("font-size", "16px") 
                 .attr("font-weight", "bold")
                 .style("text-decoration", "underline")  
-                .text("Bar chart of the number of attacks by year and target type by weapon type");   
+                .text("Bar chart of the number of attacks by target type given weapon type");   
                  
             // Add X axis
             var x = d3.scaleBand()
