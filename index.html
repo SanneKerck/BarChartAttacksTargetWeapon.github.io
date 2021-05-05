@@ -23,7 +23,7 @@
         <script>
           
         // set the dimensions and margins of the graph
-        var margin = {top: 10, right: 30, bottom: 150, left: 70},
+        var margin = {top: 20, right: 30, bottom: 160, left: 70},
         width = 1000 - margin.left - margin.right,
         height = 600 - margin.top - margin.bottom;
     
@@ -36,8 +36,8 @@
                     .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
         // Get the Data
-        d3.csv("https://gist.githubusercontent.com/SanneKerck/5389e6eb29e98aa289ac88c6695ca94e/raw/b58fb1d0ac0d6367faba14e793839a7150f10da6/HistAttackTargetWeapon.csv", function(data) {    
-        //d3.csv("HistAttackTargetWeapon.csv", function(data) {    
+        d3.csv("https://gist.githubusercontent.com/SanneKerck/87bd2b10ca766493da00a6b6bb16c47d/raw/3261364b8a8a2e1c93d67d6fe48fb65d0e9d5a84/HistKillTargetWeapon.csv", function(data) {   
+        //d3.csv("HistKillTargetWeapon.csv", function(data) {    
             // List of subgroups = header of the csv files = weapon type here
             var subgroups = data.columns.slice(1)
     
@@ -48,6 +48,15 @@
             var legendRectSize = 18;                                  
             var legendSpacing = 4; 
             
+            svg.append("text")
+                .attr("x", (width / 2))             
+                .attr("y", 0 - (margin.top / 2))
+                .attr("text-anchor", "middle")  
+                .style("font-size", "16px") 
+                .attr("font-weight", "bold")
+                .style("text-decoration", "underline")  
+                .text("Bar chart of year and target type by weapon type");
+
             // Add X axis
             var x = d3.scaleBand()
                       .domain(groups)
@@ -75,7 +84,7 @@
 
             // Add Y axis
             var y = d3.scaleLinear()
-                      .domain([0, 55000])
+                      .domain([0, 170000])
                       .range([ height, 0 ]);
             svg.append("g")
                .call(d3.axisLeft(y))
@@ -90,7 +99,7 @@
                 .style("text-anchor", "middle")
                 .style("font-size", "14px")
                 .attr("font-weight", "bold")
-                .text("Number of attacks"); 
+                .text("Number of individuals killed"); 
     
             // color palette = one color per subgroup
             var color = d3.scaleOrdinal()
@@ -120,7 +129,7 @@
                 .on("mouseout", function() { tooltip.style("display", "none"); })
                 .on("mousemove", function(d) {
                     console.log(d);
-                    tooltip.select("text").html("The exact number of attacks with this weapon type is: " + (d[1]-d[0]))
+                    tooltip.select("text").html("The exact number of killed individuals with this weapon type is: " + (d[1]-d[0]));
                 });   
             
             //Legend    
@@ -151,7 +160,7 @@
                 .attr("class", "tooltip")
                 .style("display", "none");
             tooltip.append("text")
-                .attr("x", 180)
+                .attr("x", 220)
                 .attr("dy", "1.2em")
                 .style("text-anchor", "middle")
                 .attr("font-size", "14px")
